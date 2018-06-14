@@ -22,13 +22,13 @@ void WebResource::respondWithCode(EthernetClient& client, int code)
 {
 	if (code == 200)
 	{
-		client.println(F("Web/1.1 200 OK"));
+		client.println(F("HTTP/1.1 200 OK"));
 		client.println(F("Connection: close"));  // the connection will be closed after completion of the response
 		client.println();
 	}
 	else if (code == 400)
 	{
-		client.println(F("Web/1.1 400 Bad request"));  
+		client.println(F("HTTP/1.1 400 Bad request"));  
 		client.println(F("Content-Type: text/plain"));
 		client.println(F("Connection: close"));  // the connection will be closed after completion of the response
 		client.println();
@@ -37,7 +37,7 @@ void WebResource::respondWithCode(EthernetClient& client, int code)
 	}
 	else if (code == 404)
 	{
-		client.println(F("Web/1.1 404 Not Found"));  
+		client.println(F("HTTP/1.1 404 Not Found"));  
 		client.println(F("Content-Type: text/plain"));
 		client.println(F("Connection: close"));  // the connection will be closed after completion of the response
 		client.println();
@@ -46,7 +46,7 @@ void WebResource::respondWithCode(EthernetClient& client, int code)
 	}
 	else if (code == 405)
 	{
-		client.println(F("Web/1.1 405 Method not allowed."));  
+		client.println(F("HTTP/1.1 405 Method not allowed."));  
 		client.println(F("Content-Type: text/plain"));
 		client.println(F("Connection: close"));  // the connection will be closed after completion of the response
 		client.println();
@@ -55,7 +55,7 @@ void WebResource::respondWithCode(EthernetClient& client, int code)
 	}
 	else
 	{
-		client.print(F("Web/1.1 "));
+		client.print(F("HTTP/1.1 "));
 		client.print(code);
 		client.println(F(" Unknown"));  
 		client.println(F("Content-Type: text/plain"));
