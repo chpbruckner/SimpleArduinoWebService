@@ -20,11 +20,11 @@ String WebResource::getNextPath(String& resourcePath)
 		   
 void WebResource::respondWithCode(EthernetClient& client, int code)
 {
+	Serial.print("Response: "); Serial.println(code);
 	if (code == 200)
 	{
 		client.println(F("HTTP/1.1 200 OK"));
 		client.println(F("Connection: close"));  // the connection will be closed after completion of the response
-		client.println();
 	}
 	else if (code == 400)
 	{
@@ -62,7 +62,7 @@ void WebResource::respondWithCode(EthernetClient& client, int code)
 		client.println(F("Connection: close"));  // the connection will be closed after completion of the response
 		client.println();
 		client.print(code);
-		client.println(F("nServer: I've got this code but I don't know what it means."));  
+		client.println(F("\nServer: I've got this code but I don't know what it means."));  
 		client.println();
 	}
 }
@@ -85,5 +85,10 @@ void WebResource::POST(EthernetClient& client) //The default is 404 because you'
 void WebResource::DELETE(EthernetClient& client) //The default is 404 because you're supposed to extend this class and implement a GET function to get the real stuff
 {
 	respondWithCode(client, 404);
+}
+
+WebResource* WebResource::notFoundResource()
+{
+	return new WebResource();
 }
 

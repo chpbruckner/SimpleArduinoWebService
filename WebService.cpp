@@ -31,11 +31,14 @@ bool WebService::setRequest(EthernetClient& client)
 			if(i > 255) // request 255 chars max
 			{
 				Serial.println("Oversized URI");
+				client.stop();
 				return false;	
 			}
 			
 		}
 	}
+	if(i==0) return false;
+
 	c_str[i] = '\0';
 	requestLine = c_str;
 
@@ -60,27 +63,27 @@ String WebService::getResourcePath()
 
 WebMethod WebService::getWebMethod()
 {
-	String verbStr = requestLine.substring(0, 3);
-	if (verbStr == "GET" ) return GET;  
+	String verbStr = requestLine.substring(0, 4);
+	if (verbStr == "GET ") return GET;  
 	if (verbStr == "POST") return POST; 
-	if (verbStr == "PUT" ) return PUT;  
-	if (verbStr == "HEAD") return DELETE;  
+	if (verbStr == "PUT ") return PUT;  
+	if (verbStr == "DELE") return DELETE;  
 	return UNKNOWN;  
 }
 
 void WebService::answerClient(EthernetClient& client)
 {
-	
-		
 	WebMethod WebMethod = getWebMethod();
 	
 	String resourcePath = getResourcePath();
 	Serial.print("Resource: ");
 	Serial.println(resourcePath);
 	
+	// Header, browser data and other useful info should be extracted from here.
+
 	WebResource* resource = resourceFinder(resourcePath);
 	
-	//FINISH READING FROM CLIENT: Header, browser and other useful info should be extracted from here:
+	//FINISH READING ANYTHING LEF FROM CLIENT: 
 	char c = '\n';
 	char b;
 	int request_size = 0;
@@ -120,7 +123,7 @@ void WebService::answerClient(EthernetClient& client)
 			}
 			else if(WebMethod == POST)
 			{
-				resource->DELETE(client);
+				resource->POST(client);
 			}
 			else if(WebMethod == DELETE)
 			{
@@ -139,5 +142,17 @@ void WebService::answerClient(EthernetClient& client)
 	}
 	delete resource;
 	/* --- */
+}
+
+void WebService::communicateWithClient(EthernetClient& client)
+{
+	if(setRequest(client)) // See if we can read client's request.
+	{
+		answerClient(client); // Answer
+	}
+	else
+	{
+		Serial.println("Unable to communicate with client");
+	}				
 }
 

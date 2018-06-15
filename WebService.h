@@ -13,11 +13,15 @@ class WebService
 	public:
 		//Constructor argument: A function that takes a String URI and returns a pointer to WebResource.
 		WebService(WebResource*(*resourceFinderFunction)(String&)); 
-		bool setRequest(EthernetClient&);
+		
+		//Function to do all the communication at once. It actually calls setRequest and then answerClient.
+		void communicateWithClient(EthernetClient& client);
+
+		bool setRequest(EthernetClient&); // Reads request and saves requestLine.
+		void answerClient(EthernetClient& client); // Calls requested method on WebResource gotten from the resourceFinder function.
 		String getRequestLine();
 		String getResourcePath();
 		WebMethod getWebMethod();
-		void answerClient(EthernetClient& client);
 };
 
 #endif

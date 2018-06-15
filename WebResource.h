@@ -8,8 +8,12 @@ class WebResource
 {
 	public:
 
-		static String getNodeId(String& resourcePath);
-        	static String getNextPath(String& resourcePath);
+		// Useful helper functions to create a hierarchical path of resources:
+		static String getNodeId(String& resourcePath);   // Use this to get the first thing between '/'s from the URI;
+        	static String getNextPath(String& resourcePath); // Use this to get the rest of the URI after the former.
+		/* -- */
+
+		// You should always call this function with the corresponding HTTP response code before sending your reply to the client;
 		void respondWithCode(EthernetClient& client, int code);
 
 		// The default response for the following methods is 404 because you're supposed to 
@@ -18,6 +22,8 @@ class WebResource
 		virtual void POST(EthernetClient& client); 
 		virtual void PUT(EthernetClient& client); 
 		virtual void DELETE(EthernetClient& client); 
+
+		static WebResource* notFoundResource(); // returns a plain WebResource object (only answers 404 NotFound.) 
 };
     
 #endif
