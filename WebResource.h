@@ -6,7 +6,12 @@
 
 class WebResource
 {
+	private: 
+		String headers = "Connection: close\n";
+		bool headersSet = false;
+		
 	public:
+		void setHeader(String header, String value); // Set HTTP response header		
 
 		// Useful helper functions to create a hierarchical path of resources:
 		static String getNodeId(String& resourcePath);   // Use this to get the first thing between '/'s from the URI;

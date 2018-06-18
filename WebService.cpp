@@ -83,7 +83,7 @@ void WebService::answerClient(EthernetClient& client)
 
 	WebResource* resource = resourceFinder(resourcePath);
 	
-	//FINISH READING ANYTHING LEF FROM CLIENT: 
+	//FINISH READING ANYTHING LEFT FROM CLIENT: 
 	char c = '\n';
 	char b;
 	int request_size = 0;
@@ -95,8 +95,9 @@ void WebService::answerClient(EthernetClient& client)
 			c = client.read();
 			request_size++;
 			Serial.write(c);
-			if (c == '\n' && b=='\n' || b=='\r') //Web request ends with a new newline alone
+			if ( (c == '\n' || c=='\r') && b=='\n') //Web request ends with a new newline alone
 			{
+				if (c=='\r' && client.available() > 1) client.read(); // last \n before payload
 				break;	
 			}
 			if(request_size > 1024)
@@ -107,7 +108,7 @@ void WebService::answerClient(EthernetClient& client)
 		}
 	}
 	/* --- */ 
-	
+
 	//READING IS DONE, START RESPONSE:
 	while (client.connected()) 
 	{
