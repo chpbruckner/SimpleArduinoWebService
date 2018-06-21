@@ -28,7 +28,7 @@ void WebResource::respondWithCode(EthernetClient &client, unsigned short code)
 {
 	Serial.print("Response: ");
 	Serial.println(code);
-	if (code == 200)
+	if (code == HTTP_OK)
 	{
 		client.println(F("HTTP/1.1 200 OK"));
 		client.println(headers);
@@ -39,7 +39,7 @@ void WebResource::respondWithCode(EthernetClient &client, unsigned short code)
 		}
 		client.println();
 	}
-	else if (code == 201)
+	else if (code == HTTP_CREATED)
 	{
 		client.println(F("HTTP/1.1 201 Created"));
 		client.println(headers); //The Location header should contain the URI to the new resource
@@ -50,7 +50,7 @@ void WebResource::respondWithCode(EthernetClient &client, unsigned short code)
 		}
 		client.println();
 	}
-	else if (code == 204)
+	else if (code == HTTP_NO_CONTENT)
 	{
 		client.println(F("HTTP/1.1 204 No Content"));
 		client.println(headers);
@@ -61,7 +61,7 @@ void WebResource::respondWithCode(EthernetClient &client, unsigned short code)
 		}
 		client.println();
 	}
-	else if (code == 205)
+	else if (code == HTTP_RESET_CONTENT)
 	{
 		client.println(F("HTTP/1.1 205 Reset content"));
 		client.println(headers);
@@ -72,7 +72,7 @@ void WebResource::respondWithCode(EthernetClient &client, unsigned short code)
 		}
 		client.println();
 	}
-	else if (code == 400)
+	else if (code == HTTP_BAD_REQUEST)
 	{
 		client.println(F("HTTP/1.1 400 Bad request"));
 		client.println(headers);
@@ -83,7 +83,7 @@ void WebResource::respondWithCode(EthernetClient &client, unsigned short code)
 		}
 		client.println();
 	}
-	else if (code == 403)
+	else if (code == HTTP_FORBIDDEN)
 	{
 		client.println(F("HTTP/1.1 403 Forbidden"));
 		client.println(headers);
@@ -94,7 +94,7 @@ void WebResource::respondWithCode(EthernetClient &client, unsigned short code)
 		}
 		client.println();
 	}
-	else if (code == 404)
+	else if (code == HTTP_NOT_FOUND)
 	{
 		client.println(F("HTTP/1.1 404 Not Found"));
 		client.println(headers);
@@ -105,7 +105,7 @@ void WebResource::respondWithCode(EthernetClient &client, unsigned short code)
 		}
 		client.println();
 	}
-	else if (code == 405)
+	else if (code == HTTP_METHOD_NOT_ALLOWED)
 	{
 		client.println(F("HTTP/1.1 405 Method not allowed."));
 		client.println(headers);
@@ -116,7 +116,7 @@ void WebResource::respondWithCode(EthernetClient &client, unsigned short code)
 		}
 		client.println();
 	}
-	else if (code == 406)
+	else if (code == HTTP_NOT_ACCEPTABLE)
 	{
 		client.println(F("HTTP/1.1 406 Not Acceptable"));
 		client.println(headers);
@@ -127,7 +127,7 @@ void WebResource::respondWithCode(EthernetClient &client, unsigned short code)
 		}
 		client.println();
 	}
-	else if (code == 409)
+	else if (code == HTTP_CONFLICT)
 	{
 		client.println(F("HTTP/1.1 409 Conflict"));
 		client.println(headers);
@@ -138,7 +138,7 @@ void WebResource::respondWithCode(EthernetClient &client, unsigned short code)
 		}
 		client.println();
 	}
-	else if (code == 500)
+	else if (code == HTTP_INTERNAL_SERVER_ERROR)
 	{
 		client.println(F("HTTP/1.1 500 Internal Server Error"));
 		client.println(headers);
@@ -149,7 +149,7 @@ void WebResource::respondWithCode(EthernetClient &client, unsigned short code)
 		}
 		client.println();
 	}
-	else if (code == 503)
+	else if (code == HTTP_SERVICE_UNAVAILABLE)
 	{
 		client.println(F("HTTP/1.1 503 Service Unavailable"));
 		client.println(headers);
