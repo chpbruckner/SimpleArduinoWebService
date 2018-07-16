@@ -20,7 +20,7 @@
 class WebResource
 {
   private:
-	String headers = "Connection: close\n";
+	String headers = "Connection: close\nAccess-Control-Allow-Origin: *\n";
 	bool headersSet = false;
 
   public:
@@ -39,7 +39,8 @@ class WebResource
 	virtual void GET(EthernetClient &client);
 	virtual void POST(EthernetClient &client);
 	virtual void PUT(EthernetClient &client);
-	virtual void DELETE(EthernetClient &client);
+	virtual void DELETE(EthernetClient &client);	
+	virtual void OPTIONS(EthernetClient &client);	
 
 	static WebResource *notFoundResource(); // returns a plain WebResource object (only answers 404 NotFound.)
 };

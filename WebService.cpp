@@ -68,6 +68,7 @@ WebMethod WebService::getWebMethod()
 	if (verbStr == "POST") return POST; 
 	if (verbStr == "PUT ") return PUT;  
 	if (verbStr == "DELE") return DELETE;  
+	if (verbStr == "OPTI") return OPTIONS; 
 	return UNKNOWN;  
 }
 
@@ -129,6 +130,10 @@ void WebService::answerClient(EthernetClient& client)
 			else if(WebMethod == DELETE)
 			{
 				resource->DELETE(client);
+			}
+			else if(WebMethod == OPTIONS)
+			{
+				resource->OPTIONS(client);
 			}
 			else
 			{

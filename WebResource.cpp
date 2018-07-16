@@ -196,6 +196,11 @@ void WebResource::DELETE(EthernetClient &client) //The default is 404 because yo
 	respondWithCode(client, 404);
 }
 
+void WebResource::OPTIONS(EthernetClient &client) //The default is 404 because you're supposed to extend this class and implement a OPTIONS function for the real stuff
+{
+	respondWithCode(client, 404);
+}
+
 WebResource *WebResource::notFoundResource()
 {
 	return new WebResource();

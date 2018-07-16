@@ -3,7 +3,7 @@
 
 #include "WebResource.h"
 
-enum WebMethod { HEAD, GET, POST, PUT, DELETE, UNKNOWN };
+enum WebMethod { HEAD, GET, POST, PUT, DELETE, OPTIONS, UNKNOWN };
 
 class WebService
 {
